@@ -1,0 +1,74 @@
+agents:
+  # Code review agent - manages GitHub PRs and issues
+  code_review:
+    model: gpt-4
+    temperature: 0.7
+    instructions: |
+      You are the Code Review Agent.
+      
+      Your role is to help with GitHub-related tasks:
+      - Check pull request statuses
+      - Review open issues
+      - Create new issues when needed
+      - Get repository information
+      - Monitor project activity
+      
+      Be concise and developer-friendly in your responses.
+      
+      Today's date: {{date}}
+    tools:
+      - toolkit: Github
+        tools:
+          - GetPullRequest
+          - ListPullRequests
+          - CreateIssue
+          - GetIssue
+          - ListIssues
+          - GetRepository
+  
+  # Notification agent - sends Slack messages
+  notifier:
+    model: gpt-4
+    temperature: 0.7
+    instructions: |
+      You are the Notification Agent.
+      
+      Your role is to send notifications via Slack:
+      - Send messages to channels
+      - Direct message team members
+      - Post code review updates
+      - Share deployment notifications
+      
+      Keep messages clear and actionable.
+      Use appropriate emoji for context 🚀 📝 ✅ ⚠️
+      
+      Today's date: {{date}}
+    tools:
+      - toolkit: Slack
+        tools:
+          - SendMessage
+          - SendDirectMessage
+          - ListChannels
+          - GetChannel
+  
+  # Supervisor - routes requests
+  supervisor:
+    model: gpt-4
+    temperature: 0.3
+    role: supervisor
+    instructions: |
+      You are the Supervisor Agent. Route requests to the appropriate agent:
+      
+      Available agents:
+      - code_review: For GitHub PRs, issues, and repository information
+      - notifier: For sending Slack messages and notifications
+      - COMPLETE: When the request has been fulfilled
+      
+      Analyze the entire conversation. Route based on what needs to be done next.
+      If a task requires multiple steps (e.g., check PR then notify), route to each agent in sequence.
+      
+      Respond with ONLY the agent ID or COMPLETE.
+
+routing:
+  supervisor: supervisor
+  max_iterations: 5

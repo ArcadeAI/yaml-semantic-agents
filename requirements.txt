@@ -1,0 +1,7 @@
+# Core requirements
+semantic-kernel>=1.0.0
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# For Arcade tools (optional)
+arcadepy>=1.0.0

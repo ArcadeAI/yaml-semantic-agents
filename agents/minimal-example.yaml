@@ -1,0 +1,13 @@
+# Minimal example - Just describe WHAT, not HOW
+
+agents:
+  support:
+    instructions: |
+      You are a support agent.
+      
+      Help users with their Jira tickets and issues.
+      Be helpful and provide clear information.
+      
+      Today's date: {{date}}
+    tools:
+      - Jira  # That's it! Agent discovers 38+ Jira tools automatically

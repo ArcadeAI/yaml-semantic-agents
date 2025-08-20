@@ -1,0 +1,12 @@
+# Simplest possible agent setup
+# Just one agent, no routing, no tools
+
+agents:
+  assistant:
+    instructions: |
+      You are a helpful AI assistant.
+      
+      Help the user with their questions and tasks.
+      Be friendly, clear, and concise.
+      
+      Today's date: {{date}}
